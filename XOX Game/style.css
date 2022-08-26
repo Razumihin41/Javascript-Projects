@@ -1,0 +1,174 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Degiskenleri atadik */
+:root {
+    --bg-color: rgb(0, 0, 0);
+    --text-color: #fff;
+    --border-color: #fff;
+    --line-circle-color: rgb(55, 255, 0);
+    --line-cross-color: rgb(255, 0, 0);
+    --hover-circle-color: rgb(18, 95, 14);
+    --hover-cross-color: rgb(123, 30, 30);
+    --cell-size: 125px;
+    --mark-size: 112.5px;
+}
+
+/* Sayfa bosluklarini kaldirdik */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+h1 {
+    color: var(--text-color);
+    font-size: 64px;
+    text-align: center;
+}
+
+.board {
+    margin-top: -20vh;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    /* Uclu olacak sekilde yan yana getirdik */
+    justify-content: center;
+    /*sağdan soldan ortaladik*/
+    align-content: center;
+    /* yukaridan asagidan ortaladik */
+    align-items: center;
+    /* itemlerida yukaridan asagi ortaladik. */
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.cell.cross::before,
+/* kutucuga tiklandiginda carpi olusturmak için */
+.cell.cross::after,
+/* kutucuga tiklandiginda carpi olusturmak için */
+.board.cross .cell:not(.cross):not(.circle):hover::before,
+/* Tiklanmis olanda gözükmemek kaydiyla not komutu kullandik */
+.board.cross .cell:not(.cross):not(.circle):hover::after {
+    /* Cross ve circle class yoksa hover calişacak */
+    content: "";
+    position: absolute;
+    width: calc(var(--mark-size) * .13);
+    height: var(--mark-size);
+    background-color: var(--line-cross-color);
+}
+
+.cell.cross::before,
+.board.cross .cell:not(.cross):not(.circle):hover::before {
+    transform: rotate(45deg);
+    /* Cizginin birini 45 derece saga yatirdik */
+}
+
+.cell.cross::after,
+.board.cross .cell:not(.cross):not(.circle):hover::after {
+    transform: rotate(-45deg);
+    /* Cizginin digerini 45 derece sola yatirdik */
+}
+
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.cross):not(.circle):hover::before,
+.board.circle .cell:not(.cross):not(.circle):hover::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    /* Circle classi icin cember olusturuyoruz */
+    background-color: var(--line-circle-color);
+}
+
+.cell.circle::before,
+.board.circle .cell:not(.cross):not(.circle):hover::before {
+    width: calc(var(--mark-size) * .9);
+    /* Dis cemberi olusturuyoruz */
+    height: calc(var(--mark-size) * .9);
+}
+
+.cell.circle::after,
+.board.circle .cell:not(.cross):not(.circle):hover::after {
+    width: calc(var(--mark-size) * .65);
+    /* İç cemberi olusturup rengini siyah yapiyoruz. */
+    height: calc(var(--mark-size) * .65);
+    background-color: var(--bg-color);
+}
+
+.board.circle .cell:not(.cross):not(.circle):hover::before {
+    background-color: var(--hover-circle-color);
+    /* Mouse bos alana gelindiginde rengi kisiyoruz */
+}
+
+.board.cross .cell:not(.cross):not(.circle):hover::after,
+.board.cross .cell:not(.cross):not(.circle):hover::before {
+    background-color: var(--hover-cross-color);
+    /* Mouse bos alana gelindiginde rengi kisiyoruz */
+
+}
+
+.cell.cross,
+.cell.circle {
+    cursor: not-allowed;
+    /* Tiklanmis kutucukta mouse simgesini degistirdik */
+}
+
+/* Sonuc ekranini sekillendirdik */
+.result {
+    display: none;
+    /* None hale getirerek görünmemesini sagladik. */
+    flex-direction: column;
+    /* Alt alta olmasini sagladik. */
+    align-items: center;
+    /* Ortaladik */
+    justify-content: center;
+    position: fixed;
+    /* Ekranin üst tabakasinda olmasini sagladik. Bu sayede asagidaki gibi konum degerleri verebildik. */
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .8);
+    color: var(--text-color);
+    font-size: 5rem;
+}
+
+/* Button düzeltmesi yaptik */
+.result button {
+    background-color: #fff;
+    color: #000;
+    padding: .25em .5em;
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 1rem;
+    border: 0;
+    transition: 200ms all;
+    /* Yavaşlatarak efekt olusmasini sagladik */
+}
+
+.result button:hover {
+    transform: scale(1.05);
+    /* Buton üstüne gelindiginde butonun büyümesini sagladik. */
+}
+
+/* Oyun sonlandiginda sonuc ekranini gösterebilecegimiz class ekledik */
+.result.show {
+    display: flex;
+}
