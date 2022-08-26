@@ -5,6 +5,6 @@
 
 ---
 
- ![Proje Gifi](/gif/gif.gif)
+ ![Proje Gifi](/Clock/gif/gif.gif)
 
- ![Proje Görseli](/img/Proje.jpg)
+ ![Proje Görseli](/Clock/img/Proje.jpg)
