@@ -1,7 +1,3 @@
-[PATIKA DEV PROFIL LINK](https://app.patika.dev/razumihin)
-
----
-
 # XOX Game
 
 ![Proje Görseli](/XOX%20Game/img/Proje.jpg)
